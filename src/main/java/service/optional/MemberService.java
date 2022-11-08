@@ -14,11 +14,7 @@ public class MemberService {
     }
 
     public Optional<Member> findByName(String name) {
-       /* Optional<Member> member =
-                members.stream().filter(member -> member.getName().equalsIgnoreCase(name)).findFirst();*/
-
-        //member.isPresent()
-        return Optional.empty();
+        return members.stream().filter(member -> member.getName().equalsIgnoreCase(name)).findFirst();
     }
 
 }

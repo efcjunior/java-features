@@ -4,16 +4,14 @@ import java.time.LocalDate;
 
 public class Member {
 
-    private int id;
+    private long id;
     private String name;
     private int age;
-    private LocalDate birthDate;
 
-    public Member(int id, String name, int age, LocalDate birthDate) {
+    public Member(long id, String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.birthDate = birthDate;
     }
 
     public String getName() {
