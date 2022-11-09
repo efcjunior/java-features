@@ -13,7 +13,7 @@ public class MemberServiceTest {
 
     private final Member member1 = new Member(
                 Long.valueOf(randomNumeric(1,3)), randomAlphabetic(8),
-            Integer.valueOf(randomNumeric(1,2)));
+            50);
 
 
     private final Member member2 = new Member(
@@ -44,12 +44,18 @@ public class MemberServiceTest {
 
     @Before
     public void setUp(){
-        memberService = new MemberService(newHashSet(member1, member2, member3, member4, member5));
+        memberService = new MemberService(newHashSet(member1, member2, member3, member4, member5, member6));
     }
 
     @Test
     public void findByName() {
         assertThat(memberService.findByName("Andre")).isEqualTo(Optional.empty());
-        assertThat(memberService.findByName("Ramom")).isEqualTo(Optional.empty());
+        assertThat(memberService.findByName("Ramom").orElseThrow()).isEqualTo(member6);
+    }
+
+    @Test
+    public void update() {
+        member1.setAge(35);
+        assertThat(memberService.update(member1).orElseThrow().getAge()).isEqualTo(35);
     }
 }

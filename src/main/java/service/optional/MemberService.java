@@ -17,4 +17,13 @@ public class MemberService {
         return members.stream().filter(member -> member.getName().equalsIgnoreCase(name)).findFirst();
     }
 
+    public Optional<Member> update(Member memberChanged) {
+        Optional<Member> foundMember =
+                members.stream().filter(member -> member.getId() == memberChanged.getId()).findFirst();
+
+        foundMember.ifPresent(member -> member = memberChanged);
+
+        return foundMember;
+    }
+
 }
