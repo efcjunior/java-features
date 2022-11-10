@@ -18,26 +18,26 @@ public class MemberServiceTest {
 
     private final Member member2 = new Member(
             Long.valueOf(randomNumeric(1,3)), randomAlphabetic(8),
-            Integer.valueOf(randomNumeric(1,2)));
+            35);
 
 
     private final Member member3 = new Member(
             Long.valueOf(randomNumeric(1,3)), randomAlphabetic(8),
-            Integer.valueOf(randomNumeric(1,2)));
+            22);
 
 
     private final Member member4 = new Member(
             Long.valueOf(randomNumeric(1,3)), randomAlphabetic(8),
-            Integer.valueOf(randomNumeric(1,2)));
+            23);
 
 
     private final Member member5     = new Member(
             Long.valueOf(randomNumeric(1,3)), randomAlphabetic(8),
-            Integer.valueOf(randomNumeric(1,2)));
+            36);
 
     private final Member member6     = new Member(
             Long.valueOf(randomNumeric(1,3)), "Ramom",
-            Integer.valueOf(randomNumeric(1,2)));
+            35);
 
     private MemberService memberService;
 
@@ -57,5 +57,12 @@ public class MemberServiceTest {
     public void update() {
         member1.setAge(35);
         assertThat(memberService.update(member1).orElseThrow().getAge()).isEqualTo(35);
+    }
+
+    @Test
+    public void isMemberNewer() {
+        assertThat(memberService.isMemberNewer(member2)).isEqualTo(false);
+        assertThat(memberService.isMemberNewer(member1)).isEqualTo(false);
+        assertThat(memberService.isMemberNewer(member3)).isEqualTo(true);
     }
 }
