@@ -8,6 +8,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.lang3.RandomStringUtils.*;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class MemberServiceTest {
 
@@ -49,8 +50,8 @@ public class MemberServiceTest {
 
     @Test
     public void findByName() {
-        assertThat(memberService.findByName("Andre")).isEqualTo(Optional.empty());
-        assertThat(memberService.findByName("Ramom").orElseThrow()).isEqualTo(member6);
+        assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> memberService.findByName("Andre"));
+        assertThat(memberService.findByName("Ramom")).isEqualTo(member6);
     }
 
     @Test
@@ -65,4 +66,10 @@ public class MemberServiceTest {
         assertThat(memberService.isMemberNewer(member1)).isEqualTo(false);
         assertThat(memberService.isMemberNewer(member3)).isEqualTo(true);
     }
+
+    @Test
+    public void chooseMemberByAgeGreaterThan() {
+        assertThat(memberService.chooseMemberByAgeGreaterThan(100)).isEqualTo(Member.empty());
+    }
+
 }

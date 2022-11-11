@@ -15,13 +15,20 @@ public class MemberService {
         this.members = members;
     }
 
-    public Optional<Member> findByName(String name) {
-        return members.stream().filter(member -> member.getName().equalsIgnoreCase(name)).findFirst();
+    public Member findByName(String name) {
+        return members
+                .stream()
+                .filter(member -> member.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException());
     }
 
     public Optional<Member> update(Member memberChanged) {
         Optional<Member> foundMember =
-                members.stream().filter(member -> member.getId() == memberChanged.getId()).findFirst();
+                members
+                        .stream()
+                        .filter(member -> member.getId() == memberChanged.getId())
+                        .findFirst();
 
         foundMember.ifPresent(member -> member = memberChanged);
 
@@ -35,6 +42,14 @@ public class MemberService {
                 .sorted(Comparator.comparing(Member::getAge))
                 .findFirst()
                 .isPresent();
+    }
+
+    public Member chooseMemberByAgeGreaterThan(int age) {
+        return members
+                .stream()
+                .filter(m -> m.getAge() >= age)
+                .findAny()
+                .orElse(Member.empty());
     }
 
 }
