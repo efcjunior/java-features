@@ -4,6 +4,7 @@ import org.junit.Test;
 import model.Member;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static com.google.common.collect.Sets.newHashSet;
@@ -28,12 +29,12 @@ public class MemberServiceTest {
 
 
     private final Member member4 = new Member(
-            Long.valueOf(randomNumeric(1,3)), randomAlphabetic(8),
+            Long.valueOf(randomNumeric(1,3)), "Julia",
             23);
 
 
     private final Member member5     = new Member(
-            Long.valueOf(randomNumeric(1,3)), randomAlphabetic(8),
+            Long.valueOf(randomNumeric(1,3)), "Andre",
             36);
 
     private final Member member6     = new Member(
@@ -72,4 +73,17 @@ public class MemberServiceTest {
         assertThat(memberService.chooseMemberByAgeGreaterThan(100)).isEqualTo(Member.empty());
     }
 
+    @Test
+    public void givenNames_whenFindByName_thenReturnMembers() {
+        Set<Member> actualMembers =  memberService.findByName(newHashSet("Ramom", "Andre", "Julia", "Filipe"));
+        Set<Member> expectedMembers = newHashSet(member4, member5, member6);
+        assertThat(actualMembers).isEqualTo(expectedMembers);
+    }
+
+    @Test
+    public void givenNames_whenFindByName_thenReturnEmpty() {
+        Set<Member> actualMembers =  memberService.findByName(newHashSet("Ramo1", "Andr2", "Juli3", "Filipe"));
+        Set<Member> expectedMembers = newHashSet();
+        assertThat(actualMembers).isEqualTo(expectedMembers);
+    }
 }

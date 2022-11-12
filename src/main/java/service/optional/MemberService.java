@@ -23,6 +23,21 @@ public class MemberService {
                 .orElseThrow(() -> new RuntimeException());
     }
 
+    public Optional<Member> findOptionalMemberByName(String name) {
+        return members
+                .stream()
+                .filter(member -> member.getName().equalsIgnoreCase(name))
+                .findFirst();
+    }
+
+    public Set<Member> findByName(Set<String> names) {
+        return names
+                .stream()
+                .map(this::findOptionalMemberByName)
+                .flatMap(Optional::stream)
+                .collect(Collectors.toSet());
+    }
+
     public Optional<Member> update(Member memberChanged) {
         Optional<Member> foundMember =
                 members
